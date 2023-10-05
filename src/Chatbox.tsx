@@ -1,32 +1,22 @@
 import React, { useState } from "react"
-import { ChatLog } from "./ChatLog"
 import { Box, TextField, Button, Stack } from "@mui/material"
+import { useChat } from "ai/react"
+import { ChatLog } from "./ChatLog"
 
 const textFieldId = "input-message"
 
 const Chatbox = () => {
-  const [messages, setMessages] = useState<Array<string>>([])
-  const [currentMessage, setCurrentMessage] = useState("")
-
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setMessages((previousState) => [...previousState, currentMessage])
-    setCurrentMessage("")
-  }
-
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentMessage(event.currentTarget.value)
-  }
+  const { messages, input, handleInputChange, handleSubmit } = useChat()
 
   return (
     <Box>
       <ChatLog messages={messages} />
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <Stack direction="row" alignItems="stretch">
           <TextField
             id={textFieldId}
-            onChange={onChange}
-            value={currentMessage}
+            onChange={handleInputChange}
+            value={input}
           />
           <Button type="submit"> Send </Button>
         </Stack>
