@@ -1,14 +1,15 @@
 import { List, ListItem } from "@mui/material"
+import { Message } from "ai/react"
 
 type ChatLogProperties = {
-  messages: Array<string>
+  messages: Array<Message>
 }
 
 const ChatLog = ({ messages }: ChatLogProperties) => {
   return (
     <List>
-      {messages.map((m) => (
-        <ListItem>{m}</ListItem>
+      {messages.map(({ content }) => (
+        <ListItem>{content}</ListItem>
       ))}
     </List>
   )
